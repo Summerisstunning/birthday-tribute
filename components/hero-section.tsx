@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import { useRef, useEffect, useState } from 'react'
+import { ChatDialog } from './chat-dialog'
 
 // 预定义的颜色数组，避免随机生成
 const BALLOON_COLORS = [
@@ -119,6 +120,15 @@ export function HeroSection() {
         >
           今天是兰兰女神的特别日子，这是萌萌宝贝为您精心打造的网站，记录您最耀眼的瞬间，感恩您用爱编织的59年精彩人生。
         </motion.p>
+
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="mt-8"
+        >
+          <ChatDialog />
+        </motion.div>
 
         {/* 左侧气球 */}
         {leftBalloons.map((balloon, i) => (
