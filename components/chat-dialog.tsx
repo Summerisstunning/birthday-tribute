@@ -107,12 +107,12 @@ export function ChatDialog() {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" className="bg-pink-100/50 hover:bg-pink-200/50 border-pink-200">
-          和豆包说说话 💭
+          和萌萌聊聊天 💭
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-center">豆包陪你聊天</DialogTitle>
+          <DialogTitle className="text-center">萌萌陪你聊天</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <ScrollArea className="h-[300px] w-full rounded-md border p-4">

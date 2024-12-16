@@ -33,7 +33,7 @@ export function Footer() {
             viewport={{ once: true }}
             className="text-gray-500 space-y-2"
           >
-            <p>联系可爱萌萌：summer92123@gmail.com</p>
+            <p>联系可爱萌萌：summer92123@qq.com</p>
             <p>© 2025 兰兰女神生日快乐. 所有爱与感动归于兰兰。</p>
           </motion.div>
         </div>
