@@ -125,7 +125,7 @@ export function HeroSection() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="mt-8"
+          className="mt-8 flex justify-center"
         >
           <ChatDialog />
         </motion.div>
@@ -194,3 +194,5 @@ export function HeroSection() {
     </motion.section>
   )
 }
+
+// Force rebuild - 2024-12-16 11:51
