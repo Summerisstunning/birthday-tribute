@@ -11,6 +11,7 @@ import { Acknowledgments } from '@/components/acknowledgments'
 import { Footer } from '@/components/footer'
 import { FloatingMusicPlayer } from '@/components/floating-music-player'
 
+// Force rebuild - 2024-12-16
 export default function HomePage() {
   const { toast } = useToast()
 
