@@ -1,80 +1,26 @@
-# Next.js Shadcn 模板
+# 妈妈59岁生日特别策划 - 待办事项清单
 
-一个现代化的、功能丰富的 Next.js 模板，集成了 Shadcn UI 组件。特别适合作为 AI 代码 编辑器的开发（如 Cursor / Windsurf）的基础模板。
+## 阶段一：策划与准备（提前2-3周开始）
 
-## 基于此模板开发的 AI 项目案例
-- [周周黑客松网站-现代简洁风](https://hackweek.pages.dev/)
-- [周周黑客松网站-终端风格](https://terminal-style.hackweek.pages.dev/)
-
-## 特性
-
-- ⚡️ 使用 Next.js 15 和 App Router
-- 🎨 集成 Shadcn UI 组件
-- 🎭 Tailwind CSS 样式系统
-- 📱 响应式设计
-- 🌙 深色模式支持
-- 🔍 SEO 优化
-- 📊 内置分析支持
-- 🚀 快速页面加载
-- 🛠️ 易于定制
-- 📦 生产环境就绪
-
-## 快速开始
-
-```bash
-# 克隆仓库
-git clone https://github.com/jackiexiao/next-shadcn-template.git
-
-# 安装依赖
-npm install
-
-# 启动开发服务器
-npm run dev
-```
-
-## 部署
-
-轻松部署到 Cloudflare Pages：
-```bash
-npm run deploy
-```
-
-## AI 开发支持
-
-本模板与多款 AI 编码助手完美配合：
-- 🌊 Windsurf
-- 🔍 Cursor
-- 👨‍💻 GitHub Copilot
-
-只需在您喜欢的 AI 助手中打开此仓库即可开始编码！
-
-## 推荐的 VSCode 扩展
-
-为获得最佳开发体验，建议安装以下扩展：
-
-- 🎨 Tailwind CSS IntelliSense：智能 CSS 提示
-- 📝 PostCSS Language Support：PostCSS 语言支持
-- ✨ Prettier：代码格式化
-- 🔍 ESLint：代码检查
-- 🏷️ Auto Rename Tag：自动重命名标签
-- 📖 Code Spell Checker：拼写检查
-- 🎯 Error Lens：错误提示增强
-- 📊 Import Cost：导入成本显示
-- 🛠️ Path Intellisense：路径智能提示
-- 🔧 Pretty TypeScript Errors：优化 TS 错误显示
-- 🧵 Template String Converter：模板字符串转换
-
-## 开发技巧
-
-1. 自定义组件：
-   - 在 `components/ui` 中查看基础组件
-   - 在 `components/` 中添加新组件
-   - 在 `app/globals.css` 中修改主题
-
-## 许可证
-
-MIT 许可证 - 您可以将此模板用于任何项目！
-
-## 贡献
-
-欢迎贡献！请随时提交 Pull Request。
+- [ ]  **确定整体主题与风格**
+    - [ ]  确定海报、视频、卡片的整体设计风格。
+    - [ ]  选择妈妈喜欢的颜色、图案或元素。
+    - [x]  根据六个优点设定创意主题。
+- [ ]  **收集妈妈的照片与资料**
+    - [x]  找出6张适合海报的照片，代表每个优点。
+    1. 迷死人了，时间管理大师;
+    2. 出门你就是我姐，祝你39岁生日快乐～
+    3. 你的孝顺，温暖全家
+    4. 兰兰，最甜阳光糖！
+    5. 情商100分，爱的女王！
+    6. 勇气战士，宽阔海洋！
+    7. 你是‘柔软的风’，温柔港湾
+    8. 家庭魔法师
+    9. 智慧女神，瑜伽太极样样行
+    - [x]  整理并确认每个优点的描述与文字。
+    - [ ]  整理妈妈的背景故事或值得纪念的时刻（作为视频祝福素材）。
+     
+## 阶段二：具体设计：
+1. 名人分享：fish.audio 生成名人分享的音频（个性化设置对话-豆包设置对话内容）
+2. 生日歌曲：suno或者豆包生成音乐， QR code可以生成放在背后扫描
+3. 特别祝福：即梦生成AI照片，再生成视频，变成去世奶奶的祝福（音频用fish.audio提取音色再生成）
