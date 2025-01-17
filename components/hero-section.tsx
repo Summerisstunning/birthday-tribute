@@ -21,7 +21,10 @@ const BALLOON_COLORS = [
 
 export function HeroSection() {
   const ref = useRef(null)
+  const audioRef = useRef<HTMLAudioElement>(null)
   const [isClient, setIsClient] = useState(false)
+  const [isAudioLoaded, setIsAudioLoaded] = useState(false)
+  
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"]
@@ -32,10 +35,15 @@ export function HeroSection() {
 
   useEffect(() => {
     setIsClient(true)
+    // 预加载音频
+    if (audioRef.current) {
+      audioRef.current.preload = 'metadata'
+      audioRef.current.onloadedmetadata = () => setIsAudioLoaded(true)
+    }
   }, [])
 
   if (!isClient) {
-    return null // 或者返回一个加载占位符
+    return null
   }
 
   const leftBalloons = Array(5).fill(0).map((_, i) => ({
@@ -51,148 +59,134 @@ export function HeroSection() {
   return (
     <motion.section
       ref={ref}
-      className="relative h-screen flex items-center justify-center overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      style={{ y, opacity }}
+      className="relative min-h-screen flex flex-col items-center justify-center py-20 overflow-hidden"
     >
-      {/* 背景图片 */}
-      <motion.div 
-        className="absolute inset-0 z-0"
-        style={{ y, opacity }}
+      {/* 背景图片使用 Next.js Image 组件优化加载 */}
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/background.jpg"
+          alt="Birthday background"
+          fill
+          priority
+          quality={75}
+          sizes="100vw"
+          className="object-cover"
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSAyVC0zLyovLi0/PURBTD9NQUN9bjxNf4V1hXyFj5GQkf+PsZCNkYH/2wBDARUXFx4aHR4eHUGBQYFBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYH/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+        />
+      </div>
+
+      <motion.div
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl max-w-3xl mx-4 text-center"
       >
-        <div className="relative h-screen w-full">
-          <Image
-            src="/妈妈.JPG"
-            alt="兰兰女神"
-            fill
-            className="object-contain"
-            priority
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30" />
+        <div className="relative">
+          <div className="absolute -left-3 top-1/2 transform -translate-y-1/2 text-2xl">
+            🎀
+          </div>
+          <motion.h1
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500"
+          >
+            兰兰女神生日快乐
+          </motion.h1>
+          <div className="absolute -right-3 top-1/2 transform -translate-y-1/2 text-2xl">
+            🎀
+          </div>
+          
+          {/* 优化音频加载 */}
+          <audio 
+            ref={audioRef}
+            controls 
+            className={`mx-auto transition-opacity duration-300 ${isAudioLoaded ? 'opacity-100' : 'opacity-0'}`}
+          >
+            <source src="/birthdaysong.MP4" type="video/mp4" />
+            您的浏览器不支持音频播放。
+          </audio>
+          
+          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-xl">
+            ✨
+          </div>
         </div>
       </motion.div>
 
-      {/* 内容 */}
-      <div className="relative z-10 text-center text-white px-4 mt-64">
-        <motion.h1
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-5xl md:text-6xl font-bold mb-6 text-shadow-lg"
-        >
-          兰兰女神的专属生日纪念
-        </motion.h1>
-
-        {/* 音乐播放器 */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="mb-6 relative"
-        >
-          <div className="relative mx-auto w-fit p-6 rounded-lg bg-gradient-to-r from-pink-200/30 to-purple-200/30 backdrop-blur-sm border border-white/20">
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-4xl">
-              🎂
-            </div>
-            <div className="absolute -left-3 top-1/2 transform -translate-y-1/2 text-2xl">
-              🎀
-            </div>
-            <div className="absolute -right-3 top-1/2 transform -translate-y-1/2 text-2xl">
-              🎀
-            </div>
-            <audio controls className="mx-auto">
-              <source src="/birthdaysong.MP4" type="video/mp4" />
-              Your browser does not support the audio element.
-            </audio>
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-xl">
-              ✨
-            </div>
-          </div>
-        </motion.div>
-        
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed text-shadow"
-        >
-          今天是兰兰女神的特别日子，这是萌萌宝贝为您精心打造的网站，记录您最耀眼的瞬间，感恩您用爱编织的59年精彩人生。
-        </motion.p>
-
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="mt-8 flex justify-center"
-        >
-          <ChatDialog />
-        </motion.div>
-
-        {/* 左侧气球 */}
-        {leftBalloons.map((balloon, i) => (
-          <motion.div
-            key={`left-${i}`}
-            className="absolute text-[5rem]"
-            initial={{ 
-              x: balloon.x,
-              y: Math.random() * 100 + 100
-            }}
-            animate={{ 
-              y: [null, -800],
-              x: [null, balloon.x - 50]
-            }}
-            transition={{ 
-              duration: 15 + (i * 2),
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            style={{
-              color: balloon.color
-            }}
-          >
-            🎈
-          </motion.div>
-        ))}
-
-        {/* 右侧气球 */}
-        {rightBalloons.map((balloon, i) => (
-          <motion.div
-            key={`right-${i}`}
-            className="absolute text-[5rem]"
-            initial={{ 
-              x: balloon.x,
-              y: Math.random() * 100 + 100
-            }}
-            animate={{ 
-              y: [null, -800],
-              x: [null, balloon.x + 50]
-            }}
-            transition={{ 
-              duration: 15 + (i * 2),
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            style={{
-              color: balloon.color
-            }}
-          >
-            🎈
-          </motion.div>
-        ))}
-      </div>
-
-      {/* 向下滚动提示 */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+      <motion.p
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.8 }}
+        className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed text-shadow"
       >
-        <span className="text-white text-lg">向下滚动探索更多 ↓</span>
+        今天是兰兰女神的特别日子，这是萌萌宝贝为您精心打造的网站，记录您最耀眼的瞬间，感恩您用爱编织的59年精彩人生。
+      </motion.p>
+
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+        className="mt-8 flex justify-center"
+      >
+        <ChatDialog />
       </motion.div>
+
+      {/* 优化气球动画性能 */}
+      {leftBalloons.map((balloon, i) => (
+        <motion.div
+          key={`left-${i}`}
+          className="absolute text-[5rem] will-change-transform"
+          initial={{ 
+            x: balloon.x,
+            y: Math.random() * 100 + 100
+          }}
+          animate={{ 
+            y: [null, -800],
+            x: [null, balloon.x - 50]
+          }}
+          transition={{ 
+            duration: 15 + (i * 2),
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          style={{
+            color: balloon.color,
+            left: '50%',
+            bottom: '-100px',
+          }}
+        >
+          🎈
+        </motion.div>
+      ))}
+
+      {rightBalloons.map((balloon, i) => (
+        <motion.div
+          key={`right-${i}`}
+          className="absolute text-[5rem] will-change-transform"
+          initial={{ 
+            x: balloon.x,
+            y: Math.random() * 100 + 100
+          }}
+          animate={{ 
+            y: [null, -800],
+            x: [null, balloon.x + 50]
+          }}
+          transition={{ 
+            duration: 15 + (i * 2),
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          style={{
+            color: balloon.color,
+            left: '50%',
+            bottom: '-100px',
+          }}
+        >
+          🎈
+        </motion.div>
+      ))}
     </motion.section>
   )
 }
-
-// Force rebuild - 2024-12-16 11:51

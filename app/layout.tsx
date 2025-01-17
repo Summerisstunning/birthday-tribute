@@ -1,5 +1,8 @@
 import '@/styles/globals.css'
 import { Metadata, Viewport } from 'next'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 import { siteConfig } from '@/config/site'
 import { fontSans } from '@/lib/fonts'
@@ -30,11 +33,25 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
-        <head suppressHydrationWarning />
+      <html lang="zh" suppressHydrationWarning>
+        <head suppressHydrationWarning>
+          {/* 预加载关键资源 */}
+          <link
+            rel="preload"
+            href="/background.jpg"
+            as="image"
+            type="image/jpeg"
+          />
+          <link
+            rel="preload"
+            href="/birthdaysong.MP4"
+            as="video"
+          />
+        </head>
         <body
           suppressHydrationWarning
           className={cn(
+            inter.className,
             'min-h-screen bg-background font-sans antialiased',
             fontSans.variable
           )}
