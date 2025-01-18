@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-// 豆包的性格和回复逻辑
-const douBao = {
-  // 豆包的基础性格特征
+// 萌萌的性格和回复逻辑
+const mengmeng = {
+  // 萌萌的基础性格特征
   traits: {
     mood: 'happy',
     energy: 'high',
@@ -80,7 +80,7 @@ const douBao = {
 }
 
 export function ChatDialog() {
-  const [messages, setMessages] = useState<Array<{text: string, sender: 'user' | 'douBao'}>>([])
+  const [messages, setMessages] = useState<Array<{text: string, sender: 'user' | 'mengmeng'}>>([])
   const [inputText, setInputText] = useState('')
   const [isTyping, setIsTyping] = useState(false)
 
@@ -90,13 +90,13 @@ export function ChatDialog() {
     // 添加用户消息
     setMessages(prev => [...prev, { text: inputText, sender: 'user' }])
     
-    // 显示豆包正在输入
+    // 显示萌萌正在输入
     setIsTyping(true)
     
-    // 模拟豆包思考和打字的时间
+    // 模拟萌萌思考和打字的时间
     setTimeout(() => {
-      const response = douBao.getResponse(inputText)
-      setMessages(prev => [...prev, { text: response, sender: 'douBao' }])
+      const response = mengmeng.getResponse(inputText)
+      setMessages(prev => [...prev, { text: response, sender: 'mengmeng' }])
       setIsTyping(false)
     }, 1000)
     
@@ -106,8 +106,8 @@ export function ChatDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="bg-pink-100/50 hover:bg-pink-200/50 border-pink-200">
-          和萌萌聊聊天 💭
+        <Button variant="outline" className="text-lg">
+          和萌萌聊聊
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -119,7 +119,7 @@ export function ChatDialog() {
             <div className="flex flex-col gap-3">
               {messages.length === 0 && (
                 <div className="text-center text-gray-500 text-sm">
-                  和豆包说说话吧！豆包会一直陪着你~ 🌟
+                  和萌萌说说话吧！萌萌会一直陪着你~ 🌟
                 </div>
               )}
               {messages.map((message, index) => (
@@ -141,7 +141,7 @@ export function ChatDialog() {
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="bg-gray-100 rounded-lg px-4 py-2 text-gray-500">
-                    豆包正在输入...✨
+                    萌萌正在输入...✨
                   </div>
                 </div>
               )}
@@ -152,7 +152,7 @@ export function ChatDialog() {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-              placeholder="说点什么吧..."
+              placeholder="和萌萌说说话吧！萌萌会一直陪着你~ 🌟"
               className="flex-1"
             />
             <Button onClick={handleSend}>发送</Button>

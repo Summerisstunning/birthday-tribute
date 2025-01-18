@@ -1,8 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, Tv, Mic, Rocket, Laugh } from 'lucide-react'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const audioMessages = [
   {
@@ -32,8 +32,13 @@ const audioMessages = [
 ]
 
 export function BirthdayWishes() {
+  const [mounted, setMounted] = useState(false)
   const [playing, setPlaying] = useState<string | null>(null)
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement }>({})
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const togglePlay = (file: string) => {
     if (playing === file) {
@@ -51,58 +56,58 @@ export function BirthdayWishes() {
   return (
     <section id="wishes" className="py-20 bg-gradient-to-b from-pink-50 to-white">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">满满的祝福只为兰兰女神</h2>
           <p className="text-gray-600">来自各界名人的真挚祝福</p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {audioMessages.map((message) => {
-            const Icon = message.icon
-            return (
-              <motion.div
-                key={message.file}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-xl shadow-lg p-6"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-pink-600" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-800">{message.name}</h3>
-                    <p className="text-gray-600">{message.description}</p>
-                  </div>
-                  <button
-                    onClick={() => togglePlay(message.file)}
-                    className="w-12 h-12 bg-pink-500 hover:bg-pink-600 rounded-full flex items-center justify-center transition-colors"
-                  >
-                    {playing === message.file ? (
-                      <Pause className="w-6 h-6 text-white" />
-                    ) : (
-                      <Play className="w-6 h-6 text-white" />
+          <AnimatePresence>
+            {audioMessages.map((message) => {
+              const Icon = message.icon
+              return (
+                <motion.div
+                  key={message.file}
+                  initial={mounted ? { opacity: 0, scale: 0.9 } : false}
+                  animate={mounted ? { opacity: 1, scale: 1 } : false}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-white rounded-xl shadow-lg p-6"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                      <Icon className="w-6 h-6 text-pink-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-gray-800">{message.name}</h3>
+                      <p className="text-gray-600">{message.description}</p>
+                    </div>
+                    {mounted && (
+                      <button
+                        onClick={() => togglePlay(message.file)}
+                        className="w-12 h-12 bg-pink-500 hover:bg-pink-600 rounded-full flex items-center justify-center transition-colors"
+                      >
+                        {playing === message.file ? (
+                          <Pause className="w-6 h-6 text-white" />
+                        ) : (
+                          <Play className="w-6 h-6 text-white" />
+                        )}
+                      </button>
                     )}
-                  </button>
-                </div>
-                <audio
-                  ref={(el) => {
-                    if (el) audioRefs.current[message.file] = el
-                  }}
-                  src={message.file}
-                  onEnded={() => setPlaying(null)}
-                />
-              </motion.div>
-            )
-          })}
+                  </div>
+                  {mounted && (
+                    <audio
+                      ref={(el) => {
+                        if (el) audioRefs.current[message.file] = el
+                      }}
+                      src={message.file}
+                      onEnded={() => setPlaying(null)}
+                    />
+                  )}
+                </motion.div>
+              )
+            })}
+          </AnimatePresence>
         </div>
       </div>
     </section>
